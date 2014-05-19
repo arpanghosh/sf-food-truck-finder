@@ -1,3 +1,5 @@
+<!-- The main view for food-item based searches -->
+
 <head>
   <%= stylesheet_link_tag    "food", media: "all", "data-turbolinks-track" => true %>
 </head>
@@ -6,17 +8,24 @@
   <div class="container-fluid">
     <div class="row-fluid">
       <div class="col-lg-3">
+        
+        <!-- Rendering the search box -->
         <%= render "search" %>
       </div>
+      <!-- /.col-lg-3 -->
 
       <div class="col-lg-8 align-center">
         <% if params["query"] %>
           <h2>Food Trucks with <%= params["query"].titlecase %>...</h2><br>
         <% end %>
+        
+        <!-- div that houses the map -->
         <div id="food-truck-map"></div><br><br>
+
+        <!-- div to house the list of matching trucks -->
         <div class="list-group" id="truck-listing"></div>
       </div>
-      <!-- /.col-lg-3 -->
+      <!-- /.col-lg-8 -->
     </div>
     <!-- /.row-fluid -->
   </div>
@@ -25,12 +34,13 @@
 
 
 <script>
-
+// Dynamically creates the HTML to display each matching truck
 function createTruckListing(json_truck){
   return ("<a class=\"list-group-item\"><h4>" + json_truck.applicant + "</h4><p align=\"right\"><strong>" + json_truck.address + "</strong></p></a><br>");
 };
 
-
+// Binds each truck listing to its map marker. Pans the map 
+// to the correct map marker when the listing is clicked.
 function bindTruckToMarker($truck, marker){
   $truck.on('click', function(){
     handler.getMap().setZoom(14);
@@ -40,7 +50,8 @@ function bindTruckToMarker($truck, marker){
   })
 };
 
-
+// Creates each truck listing from the JSON array returned
+// from the backend 
 function createTruckListings(json_array_trucks){
   _.each(json_array_trucks, function(json_truck){
     var $truck = $( createTruckListing(json_truck) );
@@ -53,6 +64,7 @@ function createTruckListings(json_array_trucks){
 handler = Gmaps.build('Google');
 handler.buildMap({ internal: {id: 'food-truck-map'}}, function(){
   
+  //Creating map markers for each truck returned from the backend
   var json_array_trucks = <%=raw @trucks.to_json %>
   markers = handler.addMarkers(json_array_trucks);
   _.each(json_array_trucks, function(json_truck, index){

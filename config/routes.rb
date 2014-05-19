@@ -1,16 +1,15 @@
 FoodTruckFinder::Application.routes.draw do
-  get "location/index"
-  get "location/autocomplete/:query", to: 'location#autocomplete'
+  get "location/index" # endpoint to display food trucks based on a location search
+  get "location/autocomplete/:query", to: 'location#autocomplete' # JSON endpoint to populate the location typeahead
   
-  get "food/index"
-  get "food/autocomplete"
-  get "food/search"
+  get "food/index" # endpoint to display food trucks based on a food item search
+  get "food/autocomplete" # JSON endpoint to populate the food typeahead
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root 'food#index'
+  root 'food#index' # The default option is to search by food item
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

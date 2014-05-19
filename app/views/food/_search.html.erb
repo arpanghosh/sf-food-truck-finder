@@ -1,7 +1,11 @@
+      <!-- Putting the search box in a well -->
+
         <div class="well">
           <form role="form" action="/food/index" method="get">
             <div class="form-group">
               <label for="fooditem-typeahead"><h3>What are you craving?<h5>(or enter a food truck name)</h5></h3></label><br>
+              
+              <!-- Typeahead for food-item based searches -->
               <input type="search" class="typeahead form-control" id="fooditem-typeahead" name="query" placeholder="Enter a food item..."><br><br>
             </div>
             <button type="submit" class="btn btn-primary btn-lg">Search</button>

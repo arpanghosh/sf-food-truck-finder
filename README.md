@@ -1,6 +1,7 @@
 # SF Food Truck Finder
 
 A Ruby-on-Rails + Bootstrap web-app for locating food trucks in San Francisco.
+Hungry? <strong>[Find a truck](http://ec2-54-203-10-188.us-west-2.compute.amazonaws.com:3000)</strong>
 
  
 ## Features & Dependencies 

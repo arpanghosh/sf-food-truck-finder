@@ -11,10 +11,12 @@
       </div>
 
       <div class="col-lg-6 align-right">
-        <% if params["query"] && @trucks.count > 0 %>
-          <h2>Food Trucks within half a mile of...<i><h3><%= params["query"] %></h3></i></h2><br>
-        <% else %>
-          <h2>No trucks found near <i><h3><%= params["query"] %></h3></i></h2>
+        <% if params["query"] %>
+          <% if @trucks.count > 0 %>
+            <h2>Food Trucks within half a mile of...<i><h3><%= params["query"] %></h3></i></h2><br>
+          <% else %>
+            <h2>No trucks found near <i><h3><%= params["query"] %></h3></i></h2>
+          <% end %>
         <% end %>
         <div class="list-group" id="truck-listing"></div>
       </div>

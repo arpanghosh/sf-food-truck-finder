@@ -32,9 +32,20 @@ group :doc do
   gem 'sdoc', require: false
 end
 
-# A RubyGem for accessing SF Food Trucks data through the Socrata Open Data API http://socrata.github.io/soda-ruby
+# A gem for accessing SF Food Trucks data through the Socrata Open Data API http://socrata.github.io/soda-ruby
 gem 'soda-ruby', :require => 'soda'
 
+# A gem for easily creating Google Map displays
+gem 'gmaps4rails'
+
+# A gem for making simple REST calls
+gem 'rest_client'
+
+# A gem for parsing JSON
+gem 'json'
+
+# A gem for looking up lat/long from a street address
+gem "geocoder"
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'

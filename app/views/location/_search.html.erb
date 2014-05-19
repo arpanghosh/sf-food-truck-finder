@@ -1,0 +1,41 @@
+        <div class="well">
+          <form role="form" action="/location/index" method="get">
+            <div class="form-group">
+              <label for="location-typeahead"><h3>Where do you want to eat?</h3></label><br>
+              <input type="search" class="typeahead form-control" id="location-typeahead" name="query" placeholder="Enter a location..."><br><br>
+            </div>
+            <button type="submit" class="btn btn-primary btn-lg">Search</button>
+          </form>
+        </div>
+        <!-- /.well -->
+
+<script>
+
+// constructs the suggestion engine
+var locations = new Bloodhound({
+  datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+  queryTokenizer: Bloodhound.tokenizers.whitespace,
+  limit: 10,
+  remote: {
+    // url to fetch a JSON array of locations/addresses matching the 
+    // text typed so far.
+    url: '/location/autocomplete/%QUERY.json'
+  }
+});
+ 
+locations.initialize();
+ 
+$('#location-typeahead').typeahead({
+  hint: true,
+  highlight: true,
+  minLength: 1
+},
+{
+  name: 'locations',
+  displayKey: 'name',
+  // `ttAdapter` wraps the suggestion engine in an adapter that
+  // is compatible with the typeahead jQuery plugin
+  source: locations.ttAdapter()
+});
+
+</script>

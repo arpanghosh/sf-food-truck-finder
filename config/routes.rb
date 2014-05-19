@@ -1,9 +1,16 @@
 FoodTruckFinder::Application.routes.draw do
+  get "location/index"
+  get "location/autocomplete/:query", to: 'location#autocomplete'
+  
+  get "food/index"
+  get "food/autocomplete"
+  get "food/search"
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  # root 'welcome#index'
+  root 'food#index'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

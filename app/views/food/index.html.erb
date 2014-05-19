@@ -1,0 +1,69 @@
+<head>
+  <%= stylesheet_link_tag    "food", media: "all", "data-turbolinks-track" => true %>
+</head>
+
+<body>
+  <div class="container-fluid">
+    <div class="row-fluid">
+      <div class="col-lg-3">
+        <%= render "search" %>
+      </div>
+
+      <div class="col-lg-8 align-center">
+        <% if params["query"] %>
+          <h2>Food Trucks with <%= params["query"].titlecase %>...</h2><br>
+        <% end %>
+        <div id="food-truck-map"></div><br><br>
+        <div class="list-group" id="truck-listing"></div>
+      </div>
+      <!-- /.col-lg-3 -->
+    </div>
+    <!-- /.row-fluid -->
+  </div>
+  <!-- /.container-fluid -->
+</body>
+
+
+<script>
+
+function createTruckListing(json_truck){
+  return ("<a class=\"list-group-item\"><h4>" + json_truck.applicant + "</h4><p align=\"right\"><strong>" + json_truck.address + "</strong></p></a><br>");
+};
+
+
+function bindTruckToMarker($truck, marker){
+  $truck.on('click', function(){
+    handler.getMap().setZoom(14);
+    marker.setMap(handler.getMap()); //because clusterer removes map property from marker
+    marker.panTo();
+    google.maps.event.trigger(marker.getServiceObject(), 'click');
+  })
+};
+
+
+function createTruckListings(json_array_trucks){
+  _.each(json_array_trucks, function(json_truck){
+    var $truck = $( createTruckListing(json_truck) );
+    $truck.appendTo('#truck-listing');
+    bindTruckToMarker($truck, json_truck.marker);
+  });
+};
+
+
+handler = Gmaps.build('Google');
+handler.buildMap({ internal: {id: 'food-truck-map'}}, function(){
+  
+  var json_array_trucks = <%=raw @trucks.to_json %>
+  markers = handler.addMarkers(json_array_trucks);
+  _.each(json_array_trucks, function(json_truck, index){
+    json_truck.marker = markers[index];
+  });
+
+  createTruckListings(json_array_trucks);
+  handler.bounds.extendWith(markers);
+  handler.fitMapToBounds();
+  <% if @trucks.empty? %>
+    handler.getMap().setZoom(1);
+  <% end %>
+});
+</script>
